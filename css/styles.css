@@ -1,0 +1,270 @@
+:root {
+  --speed: 1s;
+  --zoom: 1.2;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.loader {
+  font-size: 1.2rem;
+  color: #888;
+  font-style: italic;
+}
+
+.scene {
+  -webkit-perspective: 200vmin;
+          perspective: 200vmin;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.book {
+  position: relative;
+  width: calc(100vmin / 2);
+  height: 60vmin;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  -webkit-transform: rotateX(6deg) rotateY(-18deg);
+          transform: rotateX(6deg) rotateY(-18deg);
+  -webkit-transition: all var(--speed) ease-in-out;
+  transition: all var(--speed) ease-in-out;
+  cursor: pointer;
+  -webkit-box-shadow: 0 2vmin 6vmin rgba(0, 0, 0, 0.25);
+          box-shadow: 0 2vmin 6vmin rgba(0, 0, 0, 0.25);
+}
+
+.book:hover {
+  -webkit-transform: scale(1.02) rotateX(6deg) rotateY(-18deg);
+          transform: scale(1.02) rotateX(6deg) rotateY(-18deg);
+  -webkit-box-shadow: 0 2.4vmin 7vmin rgba(0, 0, 0, 0.3);
+          box-shadow: 0 2.4vmin 7vmin rgba(0, 0, 0, 0.3);
+}
+
+.book.open {
+  width: 100vmin;
+  -webkit-transform: scale(var(--zoom)) rotateX(0deg) rotateY(0deg);
+          transform: scale(var(--zoom)) rotateX(0deg) rotateY(0deg);
+}
+
+.book.open:hover {
+  -webkit-transform: scale(var(--zoom)) rotateX(0) rotateY(0);
+          transform: scale(var(--zoom)) rotateX(0) rotateY(0);
+  -webkit-box-shadow: 0 2vmin 6vmin rgba(0, 0, 0, 0.25);
+          box-shadow: 0 2vmin 6vmin rgba(0, 0, 0, 0.25);
+}
+
+.page {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: calc(100vmin / 2);
+  height: 60vmin;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  will-change: transform;
+  background: #fffefa;
+  -webkit-box-shadow: 0 0 0.1vmin rgba(0, 0, 0, 0.25) inset, 0 0 1.8vmin rgba(0, 0, 0, 0.08) inset;
+          box-shadow: 0 0 0.1vmin rgba(0, 0, 0, 0.25) inset, 0 0 1.8vmin rgba(0, 0, 0, 0.08) inset;
+  overflow: hidden;
+  -webkit-transition: -webkit-transform var(--speed) ease-in-out;
+  transition: -webkit-transform var(--speed) ease-in-out;
+  transition: transform var(--speed) ease-in-out;
+  transition: transform var(--speed) ease-in-out, -webkit-transform var(--speed) ease-in-out;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-transform-origin: left center;
+          transform-origin: left center;
+  border-radius: 0 2vmin 2vmin 0;
+}
+
+.page:before, .page:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3vmin;
+  pointer-events: none;
+}
+
+.page:before {
+  left: -3vmin;
+  background: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.18)), to(rgba(0, 0, 0, 0)));
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0));
+}
+
+.page:after {
+  right: -3vmin;
+  background: -webkit-gradient(linear, right top, left top, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0)));
+  background: linear-gradient(270deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+}
+
+.page.cover {
+  background: linear-gradient(145deg, #8c5e37, #5d3e24);
+  color: #fff;
+  -webkit-box-shadow: 0 3vmin 6vmin rgba(122, 82, 48, 0.45);
+          box-shadow: 0 3vmin 6vmin rgba(122, 82, 48, 0.45);
+}
+
+.page.cover .frame {
+  border: none;
+  padding: 2rem;
+}
+
+.page.flipped {
+  -webkit-transform: rotateY(-180deg);
+          transform: rotateY(-180deg);
+}
+
+.page .frame {
+  position: absolute;
+  inset: 1.6vmin;
+  padding: 1.8vmin;
+  border: 1.8vmin solid transparent;
+  -o-border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><defs><radialGradient id="g" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="%23ff79c6"/><stop offset="100%" stop-color="%23ffb6e6"/></radialGradient></defs><g opacity="0.9"><circle cx="8" cy="8" r="5" fill="url(%23g)"/><circle cx="56" cy="8" r="5" fill="url(%23g)"/><circle cx="8" cy="56" r="5" fill="url(%23g)"/><circle cx="56" cy="56" r="5" fill="url(%23g)"/><path d="M8 8 C 24 18, 40 18, 56 8 M8 56 C 24 46, 40 46, 56 56 M8 8 C 8 24, 8 40, 8 56 M56 8 C 56 24, 56 40, 56 56" stroke="%23b983ff" stroke-width="2" fill="none" stroke-linecap="round"/></g></svg>') 30 round;
+     border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><defs><radialGradient id="g" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="%23ff79c6"/><stop offset="100%" stop-color="%23ffb6e6"/></radialGradient></defs><g opacity="0.9"><circle cx="8" cy="8" r="5" fill="url(%23g)"/><circle cx="56" cy="8" r="5" fill="url(%23g)"/><circle cx="8" cy="56" r="5" fill="url(%23g)"/><circle cx="56" cy="56" r="5" fill="url(%23g)"/><path d="M8 8 C 24 18, 40 18, 56 8 M8 56 C 24 46, 40 46, 56 56 M8 8 C 8 24, 8 40, 8 56 M56 8 C 56 24, 56 40, 56 56" stroke="%23b983ff" stroke-width="2" fill="none" stroke-linecap="round"/></g></svg>') 30 round;
+  background: rgba(255, 255, 255, 0.6);
+  -webkit-backdrop-filter: blur(1px);
+          backdrop-filter: blur(1px);
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 0.6rem;
+}
+
+.page .frame header h2 {
+  font-size: clamp(1rem, 2.2vmin, 1.4rem);
+  margin: 0;
+  color: #1c1c1c;
+  text-align: left;
+  font-weight: 700;
+}
+
+.page .frame .media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: 1.2vmin;
+  overflow: hidden;
+  -webkit-box-shadow: 0 1vmin 2.4vmin rgba(0, 0, 0, 0.12);
+          box-shadow: 0 1vmin 2.4vmin rgba(0, 0, 0, 0.12);
+}
+
+.page .frame .media img,
+.page .frame .media video {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  display: block;
+  background-color: #f0ebe5;
+}
+
+.page .frame p {
+  font-size: clamp(0.8rem, 1.6vmin, 1rem);
+  line-height: 1.5;
+  margin: 0;
+  color: #333;
+  overflow: auto;
+}
+
+.cover-title {
+  font-size: clamp(1.8rem, 4vmin, 2.6rem);
+  line-height: 1.1;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.beam-path {
+  position: absolute;
+  inset: 1.6vmin;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.beam {
+  position: absolute;
+  width: 1.2vmin;
+  height: 1.2vmin;
+  border-radius: 50%;
+  background: radial-gradient(circle, gold 0%, rgba(255, 215, 0, 0.7) 60%, rgba(255, 215, 0, 0) 70%);
+  -webkit-box-shadow: 0 0 1vmin rgba(255, 215, 0, 0.9), 0 0 2.4vmin rgba(255, 215, 0, 0.7), 0 0 4vmin rgba(255, 215, 0, 0.4);
+          box-shadow: 0 0 1vmin rgba(255, 215, 0, 0.9), 0 0 2.4vmin rgba(255, 215, 0, 0.7), 0 0 4vmin rgba(255, 215, 0, 0.4);
+  pointer-events: none;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+.beam.is-active {
+  -webkit-animation: page-turn-sparkle 1.2s ease-in-out forwards;
+          animation: page-turn-sparkle 1.2s ease-in-out forwards;
+}
+
+@-webkit-keyframes page-turn-sparkle {
+  0% {
+    opacity: 1;
+    offset-distance: 0%;
+    -webkit-transform: translate(-50%, -50%) scale(1);
+            transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    -webkit-transform: translate(-50%, -90%) scale(1.4);
+            transform: translate(-50%, -90%) scale(1.4);
+  }
+  99% {
+    opacity: 1;
+    offset-distance: 100%;
+    -webkit-transform: translate(-50%, -50%) scale(1);
+            transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    offset-distance: 100%;
+  }
+}
+
+@keyframes page-turn-sparkle {
+  0% {
+    opacity: 1;
+    offset-distance: 0%;
+    -webkit-transform: translate(-50%, -50%) scale(1);
+            transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    -webkit-transform: translate(-50%, -90%) scale(1.4);
+            transform: translate(-50%, -90%) scale(1.4);
+  }
+  99% {
+    opacity: 1;
+    offset-distance: 100%;
+    -webkit-transform: translate(-50%, -50%) scale(1);
+            transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    offset-distance: 100%;
+  }
+}
+
+:focus-visible {
+  outline: 2px dashed #8a2be2;
+  outline-offset: 2px;
+}
+/*# sourceMappingURL=styles.css.map */
