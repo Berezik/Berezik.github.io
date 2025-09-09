@@ -7,19 +7,19 @@
     },
     {
     "type": "image",
-    "src": "./src/img/2.jpg",
+    "src": "src/img/2.jpg",
     "title": "Історія 1",
     "text": "Після цього фото ти до мене приїхала)"
   },
   {
     "type": "image",
-    "src": "./src/img/3.jpg",
+    "src": "src/img/3.jpg",
     "title": "Історія 2",
     "text": "Так ми провели перший день разом)"
   },
   {
     "type": "image",
-    "src": "./src/img/4.jpg",
+    "src": "src/img/4.jpg",
     "title": "Історія 3",
     "text": "Наш похід в парк)"
   },
